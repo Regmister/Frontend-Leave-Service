@@ -20,7 +20,7 @@ async function request(path, { auth = true, ...fetchOpts } = {}) {
   try {
     body = await response.json();
   } catch {
-    // non-JSON body
+    // not JSON body
   }
 
   if (!response.ok) {
@@ -28,6 +28,7 @@ async function request(path, { auth = true, ...fetchOpts } = {}) {
     error.status = response.status;
     error.body = body;
     throw error;
+    
   }
 
   return { data: body?.data ?? null, message: body?.message, status: response.status };

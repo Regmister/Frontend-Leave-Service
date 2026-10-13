@@ -10,7 +10,7 @@ import { Modal } from '../ui/Modal.jsx';
 
 export function MyLeavePage() {
   const { user } = useAuth();
-  const employeeId = user?.employee_id ?? user?.sub;
+  const employeeId = user?.sub;
 
   const [leaves, setLeaves] = useState([]);
   const [balance, setBalance] = useState(null);
