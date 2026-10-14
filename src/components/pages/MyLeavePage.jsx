@@ -1,12 +1,12 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useAuth } from '../../context/AuthContext.jsx';
-import { getLeaveStatus, getTotalDays, cancelLeave } from '../../api/leave.js';
-import { LeaveRequestForm } from '../leave/LeaveRequestForm.jsx';
-import { LeaveTable } from '../leave/LeaveTable.jsx';
-import { BalanceTiles } from '../leave/BalanceTiles.jsx';
-import { Alert } from '../ui/Alert.jsx';
-import { Spinner } from '../ui/Spinner.jsx';
-import { Modal } from '../ui/Modal.jsx';
+import { useState, useEffect, useCallback } from "react";
+import { useAuth } from "../../context/AuthContext.jsx";
+import { getLeaveStatus, getTotalDays, cancelLeave } from "../../api/leave.js";
+import { LeaveRequestForm } from "../leave/LeaveRequestForm.jsx";
+import { LeaveTable } from "../leave/LeaveTable.jsx";
+import { BalanceTiles } from "../leave/BalanceTiles.jsx";
+import { Alert } from "../ui/Alert.jsx";
+import { Spinner } from "../ui/Spinner.jsx";
+import { Modal } from "../ui/Modal.jsx";
 
 export function MyLeavePage() {
   const { user } = useAuth();
@@ -37,51 +37,62 @@ export function MyLeavePage() {
     }
   }, [employeeId]);
 
-  useEffect(() => { load(); }, [load]);
+  useEffect(() => {
+    load();
+  }, [load]);
 
   async function handleCancel() {
     setCancelling(true);
     try {
       await cancelLeave(cancelTarget.id);
-      setToast({ type: 'success', msg: `Leave request #${cancelTarget.id} cancelled.` });
+      setToast({
+        type: "success",
+        msg: `Leave request #${cancelTarget.id} cancelled.`,
+      });
       setCancelTarget(null);
       load();
     } catch (err) {
-      setToast({ type: 'error', msg: err.message });
+      setToast({ type: "error", msg: err.message });
     } finally {
       setCancelling(false);
     }
   }
 
   function handleRequestSuccess() {
-    setToast({ type: 'success', msg: 'Leave request submitted successfully.' });
+    setToast({ type: "success", msg: "Leave request submitted successfully." });
     load();
   }
 
   const canCancel = (leave) =>
-    leave.status === 'Pending' || leave.status === 'Approved';
+    leave.status === "Pending" || leave.status === "Approved";
 
   return (
     <div>
       <div className="page-header">
         <h1 className="page-header__title">My Leave</h1>
-        <p className="page-header__sub">Manage your leave requests and view your balance.</p>
+        <p className="page-header__sub">
+          Manage your leave requests and view your balance.
+        </p>
       </div>
 
       {toast && (
         <div className="mb-6">
-          <Alert type={toast.type} onDismiss={() => setToast(null)}>{toast.msg}</Alert>
+          <Alert type={toast.type} onDismiss={() => setToast(null)}>
+            {toast.msg}
+          </Alert>
         </div>
       )}
 
       {loading ? (
-        <div className="loading-center"><Spinner size="lg" /></div>
+        <div className="loading-center">
+          <Spinner size="lg" />
+        </div>
       ) : error ? (
         <Alert type="error">{error}</Alert>
       ) : (
         <>
           <BalanceTiles
-            daysUsed={balance?.daysUsed}
+            daysUsed={balance?.days}
             remainingBalance={balance?.remainingBalance}
           />
 
@@ -89,10 +100,15 @@ export function MyLeavePage() {
             <div className="card__header">
               <div>
                 <h2 className="card__title">Request leave</h2>
-                <p className="card__subtitle">Submit a new leave request for approval.</p>
+                <p className="card__subtitle">
+                  Submit a new leave request for approval.
+                </p>
               </div>
             </div>
-            <LeaveRequestForm employeeId={employeeId} onSuccess={handleRequestSuccess} />
+            <LeaveRequestForm
+              employeeId={employeeId}
+              onSuccess={handleRequestSuccess}
+            />
           </div>
 
           <div className="card">
@@ -135,19 +151,26 @@ export function MyLeavePage() {
                 onClick={handleCancel}
                 disabled={cancelling}
               >
-                {cancelling ? <><Spinner size="sm" />&nbsp;Cancelling…</> : 'Confirm cancel'}
+                {cancelling ? (
+                  <>
+                    <Spinner size="sm" />
+                    &nbsp;Cancelling…
+                  </>
+                ) : (
+                  "Confirm cancel"
+                )}
               </button>
             </>
           }
         >
           <p>
-            Are you sure you want to cancel request{' '}
+            Are you sure you want to cancel request{" "}
             <strong>#{cancelTarget.id}</strong>?
           </p>
           <p className="text-muted text-sm mt-4">
-            {cancelTarget.status === 'Approved'
-              ? 'Your leave balance will be refunded.'
-              : 'This pending request will be withdrawn.'}
+            {cancelTarget.status === "Approved"
+              ? "Your leave balance will be refunded."
+              : "This pending request will be withdrawn."}
           </p>
         </Modal>
       )}

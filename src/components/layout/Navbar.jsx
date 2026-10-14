@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext.jsx';
+import { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 function NavItem({ to, children }) {
   return (
@@ -8,7 +8,7 @@ function NavItem({ to, children }) {
       <NavLink
         to={to}
         className={({ isActive }) =>
-          `nav__link${isActive ? ' nav__link--active' : ''}`
+          `nav__link${isActive ? " nav__link--active" : ""}`
         }
       >
         {children}
@@ -26,7 +26,7 @@ export function Navbar() {
 
   function handleLogout() {
     logout();
-    navigate('/login');
+    navigate("/login");
   }
 
   return (
@@ -42,36 +42,23 @@ export function Navbar() {
         aria-label="Toggle navigation"
         onClick={() => setOpen((v) => !v)}
       >
-        {open ? '✕' : '☰'}
+        {open ? "✕" : "☰"}
       </button>
-
-      <ul
-        id="nav-links"
-        className={`nav__links${open ? ' nav__links--open' : ''}`}
-      >
-        {role && (
-          <NavItem to="/my-leave">My Leave</NavItem>
-        )}
-
-        {(role === 'MANAGER' || role === 'ADMIN') && (
-          <NavItem to="/team">Team</NavItem>
-        )}
-
-        {role === 'ADMIN' && (
-          <>
-            <NavItem to="/admin/leaves">All Leaves</NavItem>
-            <NavItem to="/admin/users">Users</NavItem>
-          </>
-        )}
-      </ul>
 
       <div className="nav__actions">
         {user && (
-          <span className="nav__user" aria-label={`Logged in as employee ${user.sub}`}>
+          <span
+            className="nav__user"
+            aria-label={`Logged in as employee ${user.sub}`}
+          >
             #{user.sub} {role}
           </span>
         )}
-        <button className="btn btn--ghost btn--sm" onClick={handleLogout} style={{ color: 'rgba(255,255,255,0.7)' }}>
+        <button
+          className="btn btn--ghost btn--sm"
+          onClick={handleLogout}
+          style={{ color: "rgba(255,255,255,0.7)" }}
+        >
           Sign out
         </button>
       </div>
