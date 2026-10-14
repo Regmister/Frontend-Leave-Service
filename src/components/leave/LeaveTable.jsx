@@ -39,7 +39,7 @@ function LeaveRow({ leave, actions, showEmployee }) {
   return (
     <tr>
       <td className="font-mono text-sm">{leave.id}</td>
-      {showEmployee && <td className="font-mono text-sm">{leave.employeed}</td>}
+      {showEmployee && <td className="font-mono text-sm">{leave.employeeId}</td>}
       <td>{leave.startDate}</td>
       <td>{leave.endDate}</td>
       <td><StatusBadge value={leave.status} /></td>
