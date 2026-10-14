@@ -55,4 +55,23 @@ describe('Alert', () => {
     await user.click(screen.getByRole('button', { name: /dismiss/i }));
     expect(onDismiss).toHaveBeenCalledTimes(1);
   });
+
+  it('always applies the base "alert" class alongside the variant class', () => {
+    const { container } = render(<Alert type="warning">msg</Alert>);
+    expect(container.firstChild).toHaveClass('alert');
+    expect(container.firstChild).toHaveClass('alert--warning');
+  });
+
+  it('renders the dismiss button with an accessible label', () => {
+    render(<Alert type="error" onDismiss={vi.fn()}>msg</Alert>);
+    const button = screen.getByRole('button', { name: /dismiss notification/i });
+    expect(button).toBeInTheDocument();
+  });
+
+  it('keeps the error alert assertive and dismissible together', () => {
+    render(<Alert type="error" onDismiss={vi.fn()}>Critical</Alert>);
+    // error alerts should still expose role="alert" even with a dismiss button
+    expect(screen.getByRole('alert')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /dismiss/i })).toBeInTheDocument();
+  });
 });
