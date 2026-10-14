@@ -111,9 +111,9 @@ describe('getLeaveStatus', () => {
 
 // ─── getTotalDays ─────────────────────────────────────────────────────────────
 describe('getTotalDays', () => {
-  it('returns daysUsed and remainingBalance', async () => {
+  it('returns days and remainingBalance', async () => {
     const result = await getTotalDays(1001);
-    expect(result).toMatchObject({ daysUsed: 5, remainingBalance: 20 });
+    expect(result).toMatchObject({ days: 5, remainingBalance: 20 });
   });
 });
 

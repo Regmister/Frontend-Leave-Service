@@ -258,19 +258,19 @@ function EmployeeBalanceCard({ data }) {
     <dl
       style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}
     >
-      <Row label="Name" value={`${data.first_name} ${data.last_name}`} />
+      <Row label="Name" value={`${data.firstName} ${data.lastName}`} />
       <Row label="Role" value={<StatusBadge value={data.role} />} />
       <Row label="Department" value={data.department ?? "—"} />
-      <Row label="Manager ID" value={data.manager_id ?? "—"} />
+      <Row label="Manager ID" value={data.managerId ?? "—"} />
       <Row
         label="Balance"
-        value={`${Number(data.leave_balance).toFixed(1)} days`}
+        value={`${Number(data.currentBalance).toFixed(1)} days`}
       />
       <Row
         label="Entitlement"
-        value={`${Number(data.leave_refresh_amount).toFixed(1)} days`}
+        value={`${Number(data.entitlement).toFixed(1)} days`}
       />
-      <Row label="Refresh date" value={data.leave_refresh_date} />
+      <Row label="Refresh date" value={data.refreshDate ?? "—"} />
     </dl>
   );
 }

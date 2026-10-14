@@ -34,7 +34,7 @@ export const leaveHandlers = [
   ),
 
   http.get(`${BASE}/leave-request/total-days/:employeeId`, () =>
-    HttpResponse.json({ data: { daysUsed: 5, remainingBalance: 20 } }),
+    HttpResponse.json({ data: { days: 5, remainingBalance: 20 } }),
   ),
 
   http.post(`${BASE}/leave-request`, () =>

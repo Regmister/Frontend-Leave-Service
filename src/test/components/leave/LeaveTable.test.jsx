@@ -4,10 +4,10 @@ import userEvent from '@testing-library/user-event';
 import { LeaveTable } from '../../../components/leave/LeaveTable.jsx';
 
 const sampleLeaves = [
-  { id: 1, startDate: '2026-09-15', endDate: '2026-09-19', status: 'Pending',   reviewedBy: null,   employeed: 1001 },
-  { id: 2, startDate: '2026-08-01', endDate: '2026-08-05', status: 'Approved',  reviewedBy: 2001,   employeed: 1001 },
-  { id: 3, startDate: '2026-07-10', endDate: '2026-07-11', status: 'Declined',  reviewedBy: 2001,   employeed: 1002 },
-  { id: 4, startDate: '2026-06-01', endDate: '2026-06-03', status: 'Cancelled', reviewedBy: null,   employeed: 1001 },
+  { id: 1, startDate: '2026-09-15', endDate: '2026-09-19', status: 'Pending',   reviewedBy: null,   employeeId: 1001 },
+  { id: 2, startDate: '2026-08-01', endDate: '2026-08-05', status: 'Approved',  reviewedBy: 2001,   employeeId: 1001 },
+  { id: 3, startDate: '2026-07-10', endDate: '2026-07-11', status: 'Declined',  reviewedBy: 2001,   employeeId: 1002 },
+  { id: 4, startDate: '2026-06-01', endDate: '2026-06-03', status: 'Cancelled', reviewedBy: null,   employeeId: 1001 },
 ];
 
 describe('LeaveTable — empty state', () => {

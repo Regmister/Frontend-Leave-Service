@@ -30,47 +30,30 @@ describe('Navbar — brand', () => {
   });
 });
 
-describe('Navbar — USER links', () => {
-  it('shows My Leave link for a USER', () => {
+describe('Navbar — navigation links', () => {
+  // The Navbar intentionally renders no section navigation links.
+  // Navigation between sections is handled via the Dashboard quick links.
+  it('does not render a My Leave link', () => {
     renderNavbar({ sub: 1001, role: 'USER', exp: 9999999999 });
-    expect(screen.getByRole('link', { name: /my leave/i })).toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: /my leave/i })).not.toBeInTheDocument();
   });
 
-  it('does NOT show Team link for a USER', () => {
-    renderNavbar({ sub: 1001, role: 'USER', exp: 9999999999 });
+  it('does not render a Team link even for a MANAGER', () => {
+    renderNavbar({ sub: 2001, role: 'MANAGER', exp: 9999999999 });
     expect(screen.queryByRole('link', { name: /team/i })).not.toBeInTheDocument();
   });
 
-  it('does NOT show All Leaves link for a USER', () => {
-    renderNavbar({ sub: 1001, role: 'USER', exp: 9999999999 });
-    expect(screen.queryByRole('link', { name: /all leaves/i })).not.toBeInTheDocument();
-  });
-
-  it('does NOT show Users link for a USER', () => {
-    renderNavbar({ sub: 1001, role: 'USER', exp: 9999999999 });
-    expect(screen.queryByRole('link', { name: /^users$/i })).not.toBeInTheDocument();
-  });
-});
-
-describe('Navbar — MANAGER links', () => {
-  it('shows Team link for a MANAGER', () => {
-    renderNavbar({ sub: 2001, role: 'MANAGER', exp: 9999999999 });
-    expect(screen.getByRole('link', { name: /team/i })).toBeInTheDocument();
-  });
-
-  it('does NOT show All Leaves or Users for MANAGER', () => {
-    renderNavbar({ sub: 2001, role: 'MANAGER', exp: 9999999999 });
-    expect(screen.queryByRole('link', { name: /all leaves/i })).not.toBeInTheDocument();
-    expect(screen.queryByRole('link', { name: /^users$/i })).not.toBeInTheDocument();
-  });
-});
-
-describe('Navbar — ADMIN links', () => {
-  it('shows Team, All Leaves, and Users links for ADMIN', () => {
+  it('does not render admin links even for an ADMIN', () => {
     renderNavbar({ sub: 3001, role: 'ADMIN', exp: 9999999999 });
-    expect(screen.getByRole('link', { name: /team/i })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /all leaves/i })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /^users$/i })).toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: /all leaves/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: /^users$/i })).not.toBeInTheDocument();
+  });
+
+  it('only renders the brand link', () => {
+    renderNavbar({ sub: 1001, role: 'USER', exp: 9999999999 });
+    const links = screen.getAllByRole('link');
+    expect(links).toHaveLength(1);
+    expect(links[0]).toHaveAccessibleName(/leave service home/i);
   });
 });
 

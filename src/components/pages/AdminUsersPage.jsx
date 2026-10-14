@@ -170,9 +170,10 @@ function AmendEmployeeForm({ onSuccess }) {
       if (form.manager_id) payload.manager_id = Number(form.manager_id);
       if (form.leave_balance !== '') payload.leave_balance = Number(form.leave_balance);
 
-      const updated = await amendEmployee(payload);
+      await amendEmployee(payload);
+      const amendedId = form.employee_id;
       setForm({ employee_id: '', role: '', department: '', manager_id: '', leave_balance: '' });
-      onSuccess?.(`Employee ${updated.employee_id} updated successfully.`);
+      onSuccess?.(`Employee ${amendedId} updated successfully.`);
     } catch (err) {
       setError(err.message ?? 'Failed to amend employee.');
     } finally {
